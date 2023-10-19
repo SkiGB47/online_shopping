@@ -7,6 +7,7 @@ import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:online_shopping/cart/controller/cart_controller.dart';
+import 'package:online_shopping/cart/view/checkout.dart';
 import 'package:online_shopping/product/model/product_model.dart';
 import 'package:online_shopping/product/view/product.dart';
 import 'package:online_shopping/widget/custom_dialog.dart';
@@ -209,12 +210,21 @@ class CartPage extends StatelessWidget {
               }),
             ],
           )),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.black)),
-            child: const Text(
-              'Checkout',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          GestureDetector(
+            onTap: () {
+              int totalPrice = 0;
+              for (var cartItem in cartController.productList) {
+                totalPrice += cartItem.quentity * (cartItem.price ?? 0);
+              }
+              Get.to(CheckoutPage(totalPrice: totalPrice));
+            },
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.black)),
+              child: const Text(
+                'Checkout',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
