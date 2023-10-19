@@ -13,12 +13,11 @@ class CheckoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // String imgUrl = 'https://payment-api.yimplatform.com/checkout?price=$totalPrice';
-    String imgUrl = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+    String imgUrl = 'https://payment-api.yimplatform.com/checkout?price=$totalPrice';
     CartController cartController = Get.find();
-    // cartController.validateImage(imgUrl).then((value) => imgUrl = value
-    //     ? 'https://payment-api.yimplatform.com/checkout?price=$totalPrice'
-    //     : 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg');
+    cartController.validateImage(imgUrl).then((value) => imgUrl = value
+        ? 'https://payment-api.yimplatform.com/checkout?price=$totalPrice'
+        : 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg');
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -66,25 +65,27 @@ class CheckoutPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
-                  children: cartController.productList.map((element) => productItem(element)).toList(),
+                  children: cartController.productList.map((element) => productItem(element)).toList() +
+                      [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                  child: Text(
+                                'Total',
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              )),
+                              Text(
+                                totalPrice.toString(),
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                 ),
               ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              children: [
-                const Expanded(
-                    child: Text(
-                  'Total',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )),
-                Text(
-                  totalPrice.toString(),
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-              ],
             ),
           ),
         ],
