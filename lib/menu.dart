@@ -3,8 +3,8 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/state_manager.dart';
 import 'package:online_shopping/cart/cart.dart';
+import 'package:online_shopping/favorite/favorite.dart';
 import 'package:online_shopping/homepage/view/home.dart';
-import 'package:online_shopping/favorite/saved.dart';
 
 import 'homepage/controller/home_controller.dart';
 
@@ -17,8 +17,8 @@ class Menu extends StatelessWidget {
     RxInt tabIndex = 0.obs;
     final taps = [
       const HomePage(),
-      Saved(),
-      CartPage(),
+      const FavoritePage(),
+      const CartPage(),
     ];
     return Scaffold(
       backgroundColor: Colors.white,
@@ -51,10 +51,17 @@ class Menu extends StatelessWidget {
                   selectedItemColor: const Color.fromRGBO(2, 65, 109, 1),
                   iconSize: 28,
                   items: [
-                    BottomNavigationBarItem(icon: Icon(tabIndex.value == 0 ? IconlyBold.home : IconlyLight.home), label: 'Home'),
-                    BottomNavigationBarItem(icon: Icon(tabIndex.value == 1 ? Icons.favorite : Icons.favorite_border), label: 'Saved'),
                     BottomNavigationBarItem(
-                        icon: Icon(tabIndex.value == 2 ? Icons.shopping_cart_rounded : Icons.shopping_cart_outlined), label: 'Cart'),
+                        icon: Icon(
+                          tabIndex.value == 0 ? IconlyBold.home : IconlyLight.home,
+                          color: Colors.orange,
+                        ),
+                        label: 'Home'),
+                    BottomNavigationBarItem(
+                        icon: Icon(tabIndex.value == 1 ? Icons.favorite : Icons.favorite_border, color: Colors.orange), label: 'Saved'),
+                    BottomNavigationBarItem(
+                        icon: Icon(tabIndex.value == 2 ? Icons.shopping_cart_rounded : Icons.shopping_cart_outlined, color: Colors.orange),
+                        label: 'Cart'),
                   ],
                   onTap: (index) {
                     tabIndex(index);

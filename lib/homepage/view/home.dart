@@ -84,7 +84,7 @@ class HomePageState extends State<HomePage> {
                   activeIndex: homeController.bannerIndex.value,
                   count: homeController.bannerList.length,
                   effect: const ExpandingDotsEffect(
-                    activeDotColor: Color.fromRGBO(2, 65, 109, 0.9),
+                    activeDotColor: Colors.orange,
                     dotHeight: 8,
                     dotWidth: 12,
                     spacing: 6,
