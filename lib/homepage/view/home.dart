@@ -154,7 +154,9 @@ class HomePageState extends State<HomePage> {
           scrollDirection: Axis.horizontal,
           child: Obx(
             () => Row(
-              children: homeController.productList.map((element) => itemProductCard(element)).toList(),
+              children: homeController.productList.isEmpty
+                  ? [const CircularProgressIndicator()]
+                  : homeController.productList.sublist(0, 4).map((element) => itemProductCard(element)).toList(),
             ),
           ),
         ),

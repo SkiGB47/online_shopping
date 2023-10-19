@@ -21,7 +21,6 @@ class ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     productController.checkFavorite(widget.product);
@@ -70,6 +69,7 @@ class ProductPageState extends State<ProductPage> {
                             () => GestureDetector(
                               onTap: () {
                                 productController.toggleFavorite(widget.product);
+                                showSnackBar(productController.isFavorite.value ? "Remove Saved Product" : "Product Saved");
                               },
                               child: Icon(
                                 productController.isFavorite.value ? Icons.favorite : Icons.favorite_border,
@@ -90,7 +90,10 @@ class ProductPageState extends State<ProductPage> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                productController.addProductInCart(widget.product);
+                showSnackBar("Product added in cart");
+              },
               child: Row(
                 children: [
                   Expanded(
@@ -118,5 +121,13 @@ class ProductPageState extends State<ProductPage> {
         ),
       ),
     );
+  }
+
+  showSnackBar(String title) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      title,
+      style: const TextStyle(fontSize: 20),
+    )));
   }
 }

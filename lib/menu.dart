@@ -3,7 +3,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/state_manager.dart';
 import 'package:online_shopping/cart/cart.dart';
-import 'package:online_shopping/favorite/favorite.dart';
+import 'package:online_shopping/favorite/view/favorite.dart';
 import 'package:online_shopping/homepage/view/home.dart';
 
 import 'homepage/controller/home_controller.dart';
