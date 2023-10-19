@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:online_shopping/homepage/controller/home_controller.dart';
-import 'package:online_shopping/homepage/model/product_model.dart';
+import 'package:online_shopping/product/model/product_model.dart';
 import 'package:online_shopping/product/view/product.dart';
 
 class RecommendPage extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:online_shopping/database/cart_db.dart';
 import 'package:online_shopping/database/favorite_db.dart';
-import 'package:online_shopping/homepage/model/product_model.dart';
+import 'package:online_shopping/product/model/product_model.dart';
 
 class ProductController extends GetxController {
   final favoriteDB = FavoriteDB(dbName: 'favorite.db');

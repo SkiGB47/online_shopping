@@ -4,30 +4,18 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_utils/src/extensions/widget_extensions.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
-import 'package:online_shopping/homepage/model/product_model.dart';
 import 'package:online_shopping/product/controller/product_controller.dart';
+import 'package:online_shopping/product/model/product_model.dart';
 
-class ProductPage extends StatefulWidget {
+class ProductPage extends StatelessWidget {
   final ProductModel product;
 
   const ProductPage({super.key, required this.product});
 
   @override
-  ProductPageState createState() => ProductPageState();
-}
-
-class ProductPageState extends State<ProductPage> {
-  ProductController productController = Get.put(ProductController());
-
-  @override
-  void initState() {
-    super.initState();
-
-    productController.checkFavorite(widget.product);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    ProductController productController = Get.put(ProductController());
+    productController.checkFavorite(product);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(),
@@ -45,7 +33,7 @@ class ProductPageState extends State<ProductPage> {
                         color: Colors.white,
                         child: CachedNetworkImage(
                           useOldImageOnUrlChange: true,
-                          imageUrl: widget.product.imgUrl ?? '',
+                          imageUrl: product.imgUrl ?? '',
                           fit: BoxFit.fitWidth,
                           errorWidget: (context, url, error) => Container(
                             color: Colors.grey[200],
@@ -68,8 +56,8 @@ class ProductPageState extends State<ProductPage> {
                           Obx(
                             () => GestureDetector(
                               onTap: () {
-                                productController.toggleFavorite(widget.product);
-                                showSnackBar(productController.isFavorite.value ? "Remove Saved Product" : "Product Saved");
+                                productController.toggleFavorite(product);
+                                showSnackBar(productController.isFavorite.value ? "Remove Saved Product" : "Product Saved", context);
                               },
                               child: Icon(
                                 productController.isFavorite.value ? Icons.favorite : Icons.favorite_border,
@@ -80,10 +68,10 @@ class ProductPageState extends State<ProductPage> {
                         ],
                       ),
                       Text(
-                        widget.product.name ?? '',
+                        product.name ?? '',
                         style: const TextStyle(fontSize: 20),
                       ).paddingSymmetric(vertical: 16),
-                      Text('\$ ${NumberFormat("#,##0.00", "en_US").format(widget.product.price ?? 0).toString()}'),
+                      Text('\$ ${NumberFormat("#,##0.00", "en_US").format(product.price ?? 0).toString()}'),
                     ],
                   ),
                 ),
@@ -91,8 +79,8 @@ class ProductPageState extends State<ProductPage> {
             ),
             GestureDetector(
               onTap: () {
-                productController.addProductInCart(widget.product);
-                showSnackBar("Product added in cart");
+                productController.addProductInCart(product);
+                showSnackBar("Product added in cart", context);
               },
               child: Row(
                 children: [
@@ -123,7 +111,7 @@ class ProductPageState extends State<ProductPage> {
     );
   }
 
-  showSnackBar(String title) {
+  showSnackBar(String title, BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
       title,

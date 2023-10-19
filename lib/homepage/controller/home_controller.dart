@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:online_shopping/homepage/model/banner_model.dart';
-import 'package:online_shopping/homepage/model/product_model.dart';
+import 'package:online_shopping/product/model/product_model.dart';
 
 class HomeController extends GetxController {
   RxList<BannerModel> bannerList = <BannerModel>[].obs;

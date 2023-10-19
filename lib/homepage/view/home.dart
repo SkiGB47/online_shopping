@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:online_shopping/homepage/controller/home_controller.dart';
-import 'package:online_shopping/homepage/model/product_model.dart';
+import 'package:online_shopping/product/model/product_model.dart';
 import 'package:online_shopping/product/view/product.dart';
 import 'package:online_shopping/recommend/view/recommend.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -207,7 +207,9 @@ class HomePageState extends State<HomePage> {
             Expanded(
               child: Text(
                 productModel.name ?? '',
-                style: const TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 18),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
             ),
             Text('\$ ${NumberFormat("#,##0.00", "en_US").format(productModel.price ?? 0).toString()}'),
