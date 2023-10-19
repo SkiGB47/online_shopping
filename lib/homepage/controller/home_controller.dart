@@ -13,17 +13,32 @@ class HomeController extends GetxController {
 
   callBannerList() {
     bannerList.clear();
-    rootBundle.loadString('assets/json/appendix_a.json').then((jsonStr) {
+    rootBundle.loadString('assets/json/appendix_a.json').then((jsonStr) async {
       debugPrint('json Str : $jsonStr');
-      bannerList.addAll(bannerModelFromJson(jsonStr));
+      final bannerModel = bannerModelFromJson(jsonStr);
+      for (final bannerIndex in bannerModel) {
+        final checkImgExits = await validateImage(bannerIndex.imgUrl ?? '');
+        if (!checkImgExits) {
+          bannerIndex.imgUrl = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+        }
+      }
+      bannerList.addAll(bannerModel);
+
       bannerList.refresh();
     });
   }
 
   callProductList() {
     productList.clear();
-    rootBundle.loadString('assets/json/appendix_b.json').then((jsonStr) {
-      productList.addAll(productModelFromJson(jsonStr));
+    rootBundle.loadString('assets/json/appendix_b.json').then((jsonStr) async {
+      final productModel = productModelFromJson(jsonStr);
+      for (final productIndex in productModel) {
+        final checkImgExits = await validateImage(productIndex.imgUrl ?? '');
+        if (!checkImgExits) {
+          productIndex.imgUrl = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+        }
+      }
+      productList.addAll(productModel);
       productList.refresh();
     });
   }

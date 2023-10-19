@@ -5,16 +5,18 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:online_shopping/homepage/controller/home_controller.dart';
 import 'package:online_shopping/homepage/model/product_model.dart';
+import 'package:online_shopping/product/view/product.dart';
+import 'package:online_shopping/recommend/view/recommend.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  HomeState createState() => HomeState();
+  HomePageState createState() => HomePageState();
 }
 
-class HomeState extends State<Home> {
+class HomePageState extends State<HomePage> {
   HomeController homeController = Get.find();
 
   @override
@@ -139,7 +141,9 @@ class HomeState extends State<Home> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             )),
             GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.to(const RecommendPage());
+                },
                 child: const Text(
                   'View all',
                   style: TextStyle(fontSize: 16, color: Colors.red),
@@ -148,8 +152,10 @@ class HomeState extends State<Home> {
         ).paddingSymmetric(vertical: 16),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: homeController.productList.map((element) => itemProductCard(element)).toList(),
+          child: Obx(
+            () => Row(
+              children: homeController.productList.map((element) => itemProductCard(element)).toList(),
+            ),
           ),
         ),
       ],
@@ -157,49 +163,54 @@ class HomeState extends State<Home> {
   }
 
   Widget itemProductCard(ProductModel productModel) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      padding: const EdgeInsets.all(8),
-      width: MediaQuery.of(context).size.width * 0.4,
-      height: MediaQuery.of(context).size.width * 0.6,
-      decoration: BoxDecoration(
-        border: Border.all(width: 1.5, color: const Color(0xfff1f5f9)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: Container(
-              color: Colors.white,
-              child: CachedNetworkImage(
-                useOldImageOnUrlChange: true,
-                imageUrl: 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-                fit: BoxFit.fitWidth,
-                errorWidget: (context, url, error) => Container(
-                  color: Colors.grey[200],
-                  child: const Icon(Icons.image_not_supported_outlined),
-                ),
-                progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
+    return GestureDetector(
+      onTap: () {
+        Get.to(ProductPage(product: productModel));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16),
+        padding: const EdgeInsets.all(8),
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.width * 0.6,
+        decoration: BoxDecoration(
+          border: Border.all(width: 1.5, color: const Color(0xfff1f5f9)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                color: Colors.white,
+                child: CachedNetworkImage(
+                  useOldImageOnUrlChange: true,
+                  imageUrl: productModel.imgUrl ?? '',
+                  fit: BoxFit.fitWidth,
+                  errorWidget: (context, url, error) => Container(
+                    color: Colors.grey[200],
+                    child: const Icon(Icons.image_not_supported_outlined),
+                  ),
+                  progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                    child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: CircularProgressIndicator(
+                        value: downloadProgress.progress,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Text(
-              productModel.name ?? '',
-              style: TextStyle(fontSize: 20),
+            Expanded(
+              child: Text(
+                productModel.name ?? '',
+                style: const TextStyle(fontSize: 20),
+              ),
             ),
-          ),
-          Text('\$ ${NumberFormat("#,##0.00", "en_US").format(productModel.price ?? 0).toString()}'),
-        ],
+            Text('\$ ${NumberFormat("#,##0.00", "en_US").format(productModel.price ?? 0).toString()}'),
+          ],
+        ),
       ),
     );
   }
