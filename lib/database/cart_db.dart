@@ -51,6 +51,24 @@ class CartDB {
     });
   }
 
+  Future<int> minusCart(ProductModel productModel) async {
+    int keyId = 0;
+    return _lock.synchronized(() async {
+      final db = await openDatabase();
+      final store = intMapStoreFactory.store('cart');
+      productModel.quentity--;
+      if (productModel.quentity <= 0) {
+        final finder = Finder(filter: Filter.equals('id', productModel.id));
+        keyId = await store.delete(db, finder: finder);
+      } else {
+        keyId = await store.update(db, productModel.toJson());
+      }
+      db.close();
+
+      return keyId;
+    });
+  }
+
   Future<List<ProductModel>> loadCartData() async {
     return _lock.synchronized(() async {
       final db = await openDatabase();

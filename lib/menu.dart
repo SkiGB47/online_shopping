@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/state_manager.dart';
-import 'package:online_shopping/cart/cart.dart';
+import 'package:online_shopping/cart/view/cart.dart';
 import 'package:online_shopping/favorite/view/favorite.dart';
 import 'package:online_shopping/homepage/view/home.dart';
 
@@ -33,15 +33,7 @@ class Menu extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 height: 80,
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(158, 158, 158, 0.15),
-                      offset: Offset(0, -40),
-                      blurRadius: 36,
-                    )
-                  ],
-                ),
+                decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.orange[200] ?? Colors.grey))),
                 child: BottomNavigationBar(
                   currentIndex: tabIndex.value,
                   elevation: 0,

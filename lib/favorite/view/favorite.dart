@@ -69,35 +69,36 @@ class FavoritePage extends StatelessWidget {
   Widget itemProduct(ProductModel productModel) {
     FavoriteController favoriteController = Get.find();
 
-    return Slidable(
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-              label: 'Delete'.tr,
-              icon: Icons.delete,
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              onPressed: (context) => Get.dialog(CustomDialog(
-                    title: 'Are you sure ?',
-                    onPressedConfirm: () {
-                      Get.back();
-                      favoriteController.removeFavorite(productModel);
-                    },
-                    success: false,
-                    exclamation: true,
-                    textCancel: 'Cancel',
-                    buttonCancel: true,
-                  ))),
-        ],
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      height: Get.width * 0.2,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
       ),
-      child: GestureDetector(
-        onTap: () => Get.to(ProductPage(product: productModel))?.then((value) => favoriteController.getFavoriteList()),
-        child: Container(
-          height: Get.width * 0.2,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-          ),
+      child: Slidable(
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            SlidableAction(
+                label: 'Delete',
+                icon: Icons.delete,
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                onPressed: (context) => Get.dialog(CustomDialog(
+                      title: 'Are you sure ?',
+                      onPressedConfirm: () {
+                        Get.back();
+                        favoriteController.removeFavorite(productModel);
+                      },
+                      success: false,
+                      exclamation: true,
+                      textCancel: 'Cancel',
+                      buttonCancel: true,
+                    ))),
+          ],
+        ),
+        child: GestureDetector(
+          onTap: () => Get.to(ProductPage(product: productModel))?.then((value) => favoriteController.getFavoriteList()),
           child: Row(
             children: [
               Container(
